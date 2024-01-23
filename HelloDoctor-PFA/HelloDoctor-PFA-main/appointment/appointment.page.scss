@@ -1,0 +1,35 @@
+ion-content {
+	position: absolute;
+	--background: #f1f1f1;
+	--padding-bottom: 50px;
+  --padding-top: 40px
+}
+
+ion-refresher {
+  padding-top: calc(env(safe-area-inset-top) + 50px);
+}
+
+.title {
+  text-align: center;
+  font-weight: bold
+}
+
+ion-segment ion-slide {
+  background-color: #fff;
+  border-radius: 0.5em;
+}
+
+ion-segment-button {
+  --background-checked: #034aa6;
+  --color: #000;
+  --color-checked: #fff;
+  --indicator-height: 0px;
+  border-radius: 0.5em;
+  text-transform: none;
+}
+
+ion-button {
+  text-transform: none;
+ /* --background-checked: #034aa6;
+  --color-checked: #fff;*/
+}

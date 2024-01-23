@@ -1,0 +1,51 @@
+.header-image{
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+  height: 45vh;
+  will-change: transform;
+  z-index: -1;
+}
+
+ion-content {
+	position: absolute;
+	--padding-bottom: 50px;
+  //--padding-top: 40px;
+}
+
+ion-toolbar {
+	ion-icon {
+		font-size: 22px;
+	}
+}
+
+ion-refresher {
+  padding-top: calc(env(safe-area-inset-top) + 50px);
+}
+
+.light-bg {
+	background: #ffffff;
+	//z-index: 10;
+}
+
+.drawer {
+  position: absolute;
+  box-shadow: rgba(0,0,0,0.12) 0px 4px 16px;
+  width: 100%;
+  border-radius: 20px;
+  bottom: calc(-20vh + env(safe-are-inset-bottom));
+  height: 50vh;
+  z-index: 11;
+  background-color: #034aa6;
+}
+
+.drawer-pull {
+  background: #ccc;
+  height: 4px;
+  width: 60px;
+  border-radius: 2px;
+}
+
+.love-button{
+  color: #F25268;
+}

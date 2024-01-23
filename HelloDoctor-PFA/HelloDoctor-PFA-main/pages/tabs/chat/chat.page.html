@@ -1,0 +1,45 @@
+<ion-content [fullscreen]="true">
+
+  <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+
+  <ion-row>
+    <ion-col size="2">
+      <ion-buttons [hidden]="true">
+        <ion-button>
+          <ion-icon slot="icon-only" name="arrow-back" color="#707070"></ion-icon>
+        </ion-button>
+      </ion-buttons>
+    </ion-col>
+    <ion-col size="8" class="ion-padding">
+      <ion-card-title class="title">Chat with a Robot Doctor</ion-card-title>
+    </ion-col>
+  </ion-row>
+
+  <ion-row> <ion-col size="12" style="height: 2em;"></ion-col> </ion-row>
+
+  <ng-container *ngFor="let message of conversation">
+    <ion-row class="ion-padding request">{{ message.message }}</ion-row>
+    <ion-row class="ion-padding response">{{ message.response }}</ion-row>
+  </ng-container>
+
+  <div class="ion-padding sticky-bottom">
+    <ion-row class="sendMessage">
+      <ion-input [(ngModel)]="message" type="text" placeholder="Message..." style="--caret-color: #034aa6;"></ion-input>
+      <ion-buttons (click)="sendMessage()" style="float: right;">
+        <ion-button>
+          <ion-icon slot="icon-only" name="send" color="primary"></ion-icon>
+        </ion-button>
+      </ion-buttons>
+    </ion-row>
+
+    <ion-buttons (click)="doRefresh($event)" style="display: flex; justify-content: center;">
+      <ion-button>
+        <ion-icon slot="icon-only" name="refresh-outline" color="primary"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+
+  </div>
+
+</ion-content>

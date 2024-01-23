@@ -1,0 +1,34 @@
+<ion-content [fullscreen]="true">
+
+  <div id="header">
+    <div id="app-bar">
+      <!--ion-icon name="arrow-back"></ion-icon-->
+    </div>
+    <div id="logo">
+      <img src="assets/imgcoeur.png"/>
+    </div>
+      <h1 style="display: flex; justify-content: center;
+      align-items: center;"><b>Hello Doctor</b></h1>
+  </div>
+
+  <ion-card class="ion-padding">
+      <ion-card-content>
+        <h1>Welcome to HelloDoctor App</h1>
+        <p>Connect to the App as A</p>
+        <ion-button expand="block" routerLink="/login" (click)="onDoctorClick()" class="ion-margin-bottom">Doctor</ion-button>
+        <ion-button expand="block" routerLink="/login" (click)="onPatientClick()" fill="outline">Patient</ion-button>
+        <div class="line-text">
+          <span class="lines"></span>
+          <span class="text">Or Connect On</span>
+        </div>
+        <div class="socials">
+          <ion-button class="btn-fb">
+            <ion-icon name="logo-facebook"></ion-icon>
+          </ion-button>
+          <ion-button class="btn-go">
+            <ion-icon name="logo-google"></ion-icon>
+          </ion-button>
+        </div>
+      </ion-card-content>
+  </ion-card>
+</ion-content>

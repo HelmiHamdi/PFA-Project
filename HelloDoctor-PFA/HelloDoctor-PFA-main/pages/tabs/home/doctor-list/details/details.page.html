@@ -1,0 +1,80 @@
+<ion-content [fullscreen]="true" scrollY="false" *ngIf="doctor$ | async as doctor">
+
+  <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+
+	<div #img class="header-image" [style.background-image]="'url(' + doctor.profilePicture + ')'">
+
+    <ion-row>
+      <ion-col size="2" class="ion-padding">
+        <ion-buttons routerLink="../">
+          <ion-button>
+            <ion-icon slot="icon-only" name="arrow-back"></ion-icon>
+          </ion-button>
+        </ion-buttons>
+      </ion-col>
+      <ion-col size="8" class="ion-padding"></ion-col>
+      <ion-col size="2" class="ion-padding">
+        <ion-buttons style="float: right;">
+          <ion-button (click)="clickLove()">
+            <ion-icon class="love-button" slot="icon-only" [name]="iconName"></ion-icon>
+          </ion-button>
+        </ion-buttons>
+      </ion-col>
+    </ion-row>
+
+    <div style="height: 35vh;"></div>
+
+    <div class="drawer" #drawer>
+      <div class="ion-text-center">
+        <ion-button fill="clear" expand="full" (click)="toggleDrawer()">
+          <div class="drawer-pull"></div>
+        </ion-button>
+      </div>
+      <div class="light-bg ion-padding" style="border-top-right-radius: 2em; border-top-left-radius: 2em;">
+        <ion-text class="ion-padding" color="dark"><b style="font-weight: bold; font-size: 20px;">Dr. {{ doctor.lastName + ' ' + doctor.firstName }}</b></ion-text>
+        <ion-badge class="ion-margin" style="float: right; background-color: #e7e7e7; padding-left: 1em; padding-right: 1em;">
+          <ion-text *ngIf="ratings$ | async as rating" color="dark">{{ rating | number: '1.1-2' }}</ion-text>
+          <ion-icon name="star" color="warning" style="padding-left: 5px;"></ion-icon>
+        </ion-badge> <br>
+
+        <ion-label *ngFor="let speciality of doctor.specialities" class="ion-padding" style="font-weight: 550; font-size: 15px;">{{ speciality.categoryName }} Special</ion-label>
+        <p class="ion-padding">{{ separerPhrase(doctor.description)[0] }}</p>
+        <p class="ion-padding">{{ separerPhrase(doctor.description)[1] }}</p>
+
+        <ion-row style="margin-bottom: 27.5px;">
+          <ion-col size="4">
+            <ion-card class="ion-padding" style="height: 5.2em; text-align: center; background-color: #034aa6;">
+                <ion-card-title style="font-size: 15px; font-weight: bold; color: #fff">Patients</ion-card-title>
+                <ion-card-subtitle style="color: #fff">{{ nbPatients }}</ion-card-subtitle>
+            </ion-card>
+          </ion-col>
+          <ion-col size="4">
+            <ion-card class="ion-padding" style="height: 5.2em; text-align: center; background-color: #034aa6;">
+                <ion-card-title style="font-size: 15px; font-weight: bold; color: #fff">Experiences</ion-card-title>
+                <ion-card-subtitle style="color: #fff">{{ getAge(doctor.dateOfTakingOffice) }} years</ion-card-subtitle>
+            </ion-card>
+          </ion-col>
+          <ion-col size="4">
+            <ion-card class="ion-padding" style="height: 5.2em; text-align: center; background-color: #034aa6;">
+                <ion-card-title style="font-size: 15px; font-weight: bold; color: #fff">Ratings</ion-card-title>
+                <ion-card-subtitle style="color: #fff">{{ nbRatings }}</ion-card-subtitle>
+            </ion-card>
+          </ion-col>
+        </ion-row>
+
+        <ion-item>
+          <ion-radio slot="start"></ion-radio>
+          <ion-label>Remote and in-person consultations offered</ion-label>
+        </ion-item>
+        <ion-item>
+          <ion-radio slot="start"></ion-radio>
+          <ion-label>Works throughout the entire week</ion-label>
+        </ion-item>
+        <ion-button routerLink="appointment" expand="block" class="ion-padding" style="margin-top: 20px; text-transform: none; font-weight: bold; font-size: 15px; height: 5em;">Continue</ion-button>
+      </div>
+    </div>
+  </div>
+
+</ion-content>

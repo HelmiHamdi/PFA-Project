@@ -1,0 +1,225 @@
+<ion-content [fullscreen]="true" *ngIf="role$ | async as role">
+
+  <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+
+  <div id="header">
+    <div id="app-bar">
+      <ion-icon name="arrow-back" routerLink="/welcome"></ion-icon>
+      <div id="logo">
+        <img src="assets/imgcoeur.png" />
+      </div>
+      <ion-icon></ion-icon>
+    </div>
+    <h1>Sign Up</h1>
+  </div>
+
+  <div class="wrapper">
+    <ion-card class="form-wrapper">
+      <ion-card-content>
+        <form [formGroup]="myForm" (ngSubmit)="save()">
+
+          <ion-item>
+            <ion-icon name="person"></ion-icon>
+            <ion-input type="text" formControlName="firstName" placeholder="First Name"></ion-input>
+          </ion-item>
+          <div class="validation-errors">
+            <div
+              *ngIf="myForm.controls['firstName'].invalid && (myForm.controls['firstName'].dirty || myForm.controls['firstName'].touched)">
+              <div *ngFor="let error of form_messages.firstName">
+                <div *ngIf="myForm.controls['firstName'].hasError(error.type)" class="error-message">
+                  {{ error.message }}
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <ion-item>
+            <ion-icon name="person"></ion-icon>
+            <ion-input type="text" formControlName="lastName" placeholder="Last Name"></ion-input>
+          </ion-item>
+          <div class="validation-errors">
+            <div
+              *ngIf="myForm.controls['lastName'].invalid && (myForm.controls['lastName'].dirty || myForm.controls['lastName'].touched)">
+              <div *ngFor="let error of form_messages.lastName">
+                <div *ngIf="myForm.controls['lastName'].hasError(error.type)" class="error-message">
+                  {{ error.message }}
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <ion-list>
+            <ion-item>
+              <ion-icon name="people"></ion-icon>
+              <ion-select aria-label="Gender" interface="action-sheet" placeholder="Select Gender" formControlName="gender">
+                <ion-select-option value="male">Male</ion-select-option>
+                <ion-select-option value="female">Female</ion-select-option>
+              </ion-select>
+            </ion-item>
+          </ion-list>
+          <div class="validation-errors">
+            <ng-container *ngFor="let validation of form_messages.gender">
+              <div class="error-message"
+                *ngIf="myForm.get('gender').hasError(validation.type) && (myForm.get('gender').dirty || myForm.get('gender').touched)">
+                {{ validation.message }}
+              </div>
+            </ng-container>
+          </div>
+
+          <ion-item>
+            <ion-icon name="calendar"></ion-icon>
+            <ion-input type="Date" formControlName="dateOfBirth" placeholder="Date of Birth"></ion-input>
+          </ion-item>
+          <div class="validation-errors">
+            <div
+              *ngIf="myForm.controls['dateOfBirth'].invalid && (myForm.controls['dateOfBirth'].dirty || myForm.controls['dateOfBirth'].touched)">
+              <div *ngFor="let error of form_messages.dateOfBirth">
+                <div *ngIf="myForm.controls['dateOfBirth'].hasError(error.type)" class="error-message">
+                  {{ error.message }}
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <ion-item>
+            <ion-icon name="compass"></ion-icon>
+            <ion-input formControlName="location" placeholder="Location"></ion-input>
+          </ion-item>
+          <div class="validation-errors">
+            <div
+              *ngIf="myForm.controls['location'].invalid && (myForm.controls['location'].dirty || myForm.controls['location'].touched)">
+              <div *ngFor="let error of form_messages.location">
+                <div *ngIf="myForm.controls['location'].hasError(error.type)" class="error-message">
+                  {{ error.message }}
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <ng-container *ngIf="role === 'patient'">
+            <ion-item>
+              <ion-icon name="medkit"></ion-icon>
+              <ion-input type="number" formControlName="CNAM" placeholder="CNAM"></ion-input>
+            </ion-item>
+            <div class="validation-errors">
+              <div
+                *ngIf="myForm.controls['CNAM'].invalid && (myForm.controls['CNAM'].dirty || myForm.controls['CNAM'].touched)">
+                <div *ngFor="let error of form_messages.CNAM">
+                  <div *ngIf="myForm.controls['CNAM'].hasError(error.type)" class="error-message">
+                    {{ error.message }}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </ng-container>
+
+          <ng-container *ngIf="role === 'doctor'">
+            <ion-item>
+              <ion-icon name="calendar"></ion-icon>
+              <ion-input type="Date" formControlName="dateOfTakingOffice"
+                placeholder="Date of taking office"></ion-input>
+            </ion-item>
+            <div class="validation-errors">
+              <div
+                *ngIf="myForm.controls['dateOfTakingOffice'].invalid && (myForm.controls['dateOfTakingOffice'].dirty || myForm.controls['dateOfTakingOffice'].touched)">
+                <div *ngFor="let error of form_messages.dateOfTakingOffice">
+                  <div *ngIf="myForm.controls['dateOfTakingOffice'].hasError(error.type)" class="error-message">
+                    {{ error.message }}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </ng-container>
+
+          <ion-item>
+            <ion-icon name="call"></ion-icon>
+            <ion-input formControlName="phoneNumber" placeholder="Phone Number"></ion-input>
+          </ion-item>
+          <div class="validation-errors">
+            <div
+              *ngIf="myForm.controls['phoneNumber'].invalid && (myForm.controls['phoneNumber'].dirty || myForm.controls['phoneNumber'].touched)">
+              <div *ngFor="let error of form_messages.phoneNumber">
+                <div *ngIf="myForm.controls['phoneNumber'].hasError(error.type)" class="error-message">
+                  {{ error.message }}
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <ion-item>
+            <ion-icon name="mail"></ion-icon>
+            <ion-input formControlName="email" placeholder="Email"></ion-input>
+          </ion-item>
+          <div class="validation-errors">
+            <div
+              *ngIf="myForm.controls['email'].invalid && (myForm.controls['email'].dirty || myForm.controls['email'].touched)">
+              <div *ngFor="let error of form_messages.email">
+                <div *ngIf="myForm.controls['email'].hasError(error.type)" class="error-message">
+                  {{ error.message }}
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <ion-item>
+            <ion-icon name="lock-closed"></ion-icon>
+            <ion-input name="password" formControlName="password" [type]="showPassword ? 'text': 'password'"
+              placeholder="Password"></ion-input>
+            <ion-icon slot="end" [name]="passwordToggleIcon" (click)="togglePassword()"></ion-icon>
+          </ion-item>
+          <div class="validation-errors">
+            <div
+              *ngIf="myForm.controls['password'].invalid && (myForm.controls['password'].dirty || myForm.controls['password'].touched)">
+              <div *ngFor="let error of form_messages.password">
+                <div *ngIf="myForm.controls['password'].hasError(error.type)" class="error-message">
+                  {{ error.message }}
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <ion-item>
+            <ion-icon name="lock-closed"></ion-icon>
+            <ion-input name="password" formControlName="confirmPassword" [type]="showPassword ? 'text':'password'"
+              placeholder="Confirm Password"></ion-input>
+            <ion-icon slot="end" [name]="passwordToggleIcon2" (click)="togglePassword2()"></ion-icon>
+          </ion-item>
+          <div class="validation-errors">
+            <div
+              *ngIf="myForm.controls['confirmPassword'].invalid && (myForm.controls['confirmPassword'].dirty || myForm.controls['confirmPassword'].touched)">
+              <div *ngFor="let error of form_messages.confirmPassword">
+                <div *ngIf="myForm.controls['confirmPassword'].hasError(error.type)" class="error-message">
+                  {{ error.message }}
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <ion-button type="submit" expand="block">Register</ion-button>
+        </form>
+      </ion-card-content>
+    </ion-card>
+    <!--div class="line-text">
+      <span class="lines"></span>
+      <span class="text">Or Register with</span>
+    </div-->
+
+    <!--ion-card class="social-wrapper">
+      <ion-card-content>
+        <div class="socials">
+          <ion-button class="btn-fb">  (click)="loginWithFacebook()"
+            <ion-icon name="logo-facebook"></ion-icon>
+          </ion-button>
+          <ion-button class="btn-go">  (click)="signIn()" 
+            <ion-icon name="logo-google"></ion-icon>
+          </ion-button>
+        </div>
+      </ion-card-content>
+    </ion-card-->
+
+    <div class="test">Already have an account? <a href="./login">Login</a></div>
+  </div>
+
+</ion-content>

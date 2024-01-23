@@ -1,0 +1,78 @@
+<ion-content [fullscreen]="true">
+
+  <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+
+  <ion-row>
+    <ion-col size="2">
+      <ion-buttons routerLink="/tabs/home">
+        <ion-button>
+          <ion-icon slot="icon-only" name="arrow-back" color="#707070"></ion-icon>
+        </ion-button>
+      </ion-buttons>
+    </ion-col>
+
+    <ion-col size="8" class="ion-padding">
+      <ion-card-title class="title">Doctors</ion-card-title>
+    </ion-col>
+  </ion-row>
+
+  <ion-segment>
+    <ion-slides [options]="catSlideOpts" class="ion-padding" style="margin-bottom: 35px;">
+
+      <ion-slide class="all">
+        <ion-segment-button (click)="hidden = false; filter = false">
+          <ion-label>Tous</ion-label>
+        </ion-segment-button>
+      </ion-slide>
+
+      <ion-slide *ngFor="let category of categories$ | async">
+        <ion-segment-button (click)="hidden = true; filter = true; selectedCategory = category.categoryId">
+          <ion-label> {{ category.categoryName }} </ion-label>
+        </ion-segment-button>
+      </ion-slide>
+
+    </ion-slides>
+  </ion-segment>
+
+  <app-doctor [hidden]="hidden" *ngFor="let doctor of doctors$ | async" [doctor]="doctor">
+  </app-doctor>
+
+  <ng-container *ngFor="let doctor of doctors$ | async">
+    <ng-container *ngFor="let speciality of doctor.specialities">
+      <app-doctor *ngIf="speciality.categoryId === selectedCategory && filter === true" [doctor]="doctor">
+      </app-doctor>
+    </ng-container>
+  </ng-container>
+
+</ion-content>
+
+<ion-fab vertical="center" horizontal="end" slot="fixed" class="ion-padding">
+  <ion-fab-button>
+    <ion-icon name="search"></ion-icon>
+  </ion-fab-button>
+  <ion-fab-list side="start" class="ion-padding">
+    <div>
+      <form #searchForm="ngForm" (ngSubmit)="onSubmitForm(searchForm)">
+        <ion-text>Filter</ion-text>
+        <ion-item style="margin-top: 1em;">
+          <ion-label position="floating">Doctor Name</ion-label>
+          <ion-input type="text" placeholder="Enter doctor name" [(ngModel)]="doctorName" name="doctorName"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label position="floating">Appointment Date</ion-label>
+          <ion-input type="date" placeholder="Select date" [(ngModel)]="appointmentDate" name="appointmentDate"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label position="floating">Doctor Location</ion-label>
+          <ion-input type="text" placeholder="Enter doctor location" [(ngModel)]="doctorLocation" name="doctorLocation"></ion-input>
+        </ion-item>
+        <div>
+          <ion-button shape="round" type="submit">Apply Filter</ion-button>
+          <ion-button shape="round" type="reset" (click)="onResetForm()">Reset</ion-button>
+        </div>
+      </form>
+    </div>
+  </ion-fab-list>
+</ion-fab>

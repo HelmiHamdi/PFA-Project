@@ -1,0 +1,108 @@
+<ion-content [fullscreen]="true" *ngIf="doctor$ | async as doctor">
+  <ng-container *ngIf="sessions$ | async as sessions">
+    <ng-container *ngIf="role$ | async as role">
+
+      <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
+        <ion-refresher-content></ion-refresher-content>
+      </ion-refresher>
+
+      <ion-row>
+        <ion-col size="2">
+          <ion-buttons routerLink="../">
+            <ion-button>
+              <ion-icon slot="icon-only" name="arrow-back" color="#707070"></ion-icon>
+            </ion-button>
+          </ion-buttons>
+        </ion-col>
+
+        <ion-col size="8" class="ion-padding">
+          <ion-card-title *ngIf="role === 'patient'" class="title">Appointment</ion-card-title>
+        </ion-col>
+      </ion-row>
+
+      <div style="height: 2em;"></div>
+
+      <ion-text class="ion-padding" color="dark"><b style="padding-left: 15px; font-size: 18px;" >Select Date</b></ion-text>
+
+      <ion-row class="ion-padding">
+        <ion-col size="1" class="ion-padding"></ion-col>
+        <ion-col size="2" class="ion-padding">
+            <ion-icon name="chevron-back-outline" (click)="slidePrev()" style="float: right;"></ion-icon>
+        </ion-col>
+
+        <ion-col size="6">
+          <ion-slides>
+            <!--ion-slide *ngFor="let month of previousMonths; let i = index" (click)="selectedMonth.fill(false); selectedMonth[i] = true; monthIndex = getFirstTrueElement(selectedMonth);">
+              <b style="padding-top: 7px;">{{ month }}, {{ currentYear }}</b>
+            </ion-slide-->
+            <ion-slide (click)="selectedMonth.fill(false); selectedMonth[currentMonth] = true; monthIndex = currentMonth; days = getAllDaysOfWeekInMonth(this.monthIndex + 1, this.currentYear);">
+                <b style="padding-top: 7px;" >{{ months[currentMonth].month }}, {{ currentYear }}</b>
+            </ion-slide>
+            <ion-slide *ngFor="let month of upcomingMonths; let i = index;" (click)="selectedMonth.fill(false); selectedMonth[i + currentMonth + 1] = true; monthIndex = getSelectedMonth(selectedMonth); days = getAllDaysOfWeekInMonth(this.monthIndex + 1, this.currentYear);">
+              <b style="padding-top: 7px;">{{ month }}, {{ currentYear }}</b>
+            </ion-slide>
+          </ion-slides>
+        </ion-col>
+
+        <ion-col size="2" class="ion-padding">
+            <ion-icon name="chevron-forward-outline" (click)="slideNext()" ></ion-icon>
+        </ion-col>
+        <ion-col size="1" class="ion-padding"></ion-col>
+      </ion-row>
+
+      <ion-segment>
+        <ion-slides [options]="dateSlideOpts">
+
+          <ion-slide *ngFor="let item of [].constructor(months[monthIndex].days); index as i">
+            <ion-segment-button (click)="sessionsOnDay = []; sessionsOnDay = getSessionsByDay(i+1, sessions);">
+              <ion-label > <b style="font-size: large;">{{ i+1 }}</b> <br> {{ days[i] }}</ion-label>
+            </ion-segment-button>
+          </ion-slide>
+
+        </ion-slides>
+      </ion-segment>
+
+      <ion-row> <ion-col size="12" style="height: 2em;"></ion-col> </ion-row>
+
+      <ion-text color="dark" class="ion-padding"><b style="padding: 15px; font-size: 18px;">Select Time</b></ion-text>
+
+      <div class="ion-padding">
+        <ion-row *ngIf="role === 'patient'">
+          <ion-col size="6" class="ion-padding">
+            <ion-button class="btn-1" [color]="buttonMoon === 1 ? 'primary' : 'light'" (click)="buttonNight = 0; buttonMoon = 1" expand="block" style="height: 5em;">
+              <ion-icon name="sunny" size="large"></ion-icon>
+              <ion-label style="padding-left: 5px; font-weight: bold; font-size: 18px;">Noon</ion-label>
+            </ion-button>
+          </ion-col>
+          <ion-col size="6" class="ion-padding">
+            <ion-button class="btn-1" [color]="buttonNight === 1 ? 'primary' : 'light'" (click)="buttonNight = 1; buttonMoon = 0" expand="block" style="height: 5em;">
+              <ion-icon name="moon" size="large"></ion-icon>
+              <ion-label style="padding-left: 5px; font-weight: bold; font-size: 18px;">Night</ion-label>
+            </ion-button>
+          </ion-col>
+        </ion-row>
+
+        <ion-row *ngFor="let session of sessionsOnDay">
+          <ng-container *ngIf="session">
+            <ion-col size="4" class="ion-padding">
+              <ion-button *ngIf="buttonMoon === 1 && getTimeOfDay(convertTime(session.startTime)) === 'moon'" expand="block" [color]="session.selected === 1 ? 'primary' : 'light'" (click)="session.selected = 1; sessionId = session.sessionId">
+                <ion-label><b>{{ convertTime(session.startTime) }}</b></ion-label>
+              </ion-button>
+              <ion-button *ngIf="buttonNight === 1 && getTimeOfDay(convertTime(session.startTime)) === 'night'" expand="block" [color]="session.selected === 1 ? 'primary' : 'light'" (click)="session.selected = 1; sessionId = session.sessionId">
+                <ion-label><b>{{ convertTime(session.startTime) }}</b></ion-label>
+              </ion-button>
+            </ion-col>
+          </ng-container>
+        </ion-row>
+
+        <ion-row *ngIf="sessionsOnDay === undefined">
+          <ion-text class="ion-padding" color="dark"><b style="font-size: 15px;" >The doctor has not scheduled a session for that day, please select another date</b></ion-text>
+        </ion-row>
+
+        <ion-button (click)="confirm()" [disabled]="sessionsOnDay === undefined || sessionsOnDay === null ? true : false" expand="block" class="ion-padding" style="margin-top: 20px; text-transform: none; font-weight: bold; font-size: 15px; height: 5em;">Confirm</ion-button>
+      </div>
+
+    </ng-container>
+
+  </ng-container>
+</ion-content>

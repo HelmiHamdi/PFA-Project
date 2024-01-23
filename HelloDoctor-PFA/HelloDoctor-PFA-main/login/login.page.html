@@ -1,0 +1,47 @@
+<ion-content [fullscreen]="true" *ngIf="role$ | async as role">
+
+  <div id="header">
+    <div id="app-bar">
+      <ion-icon name="arrow-back" routerLink="/welcome"></ion-icon>
+      <div id="logo">
+        <img src="assets/imgcoeur.png"/>
+      </div>
+      <ion-icon></ion-icon>
+    </div>
+    <h1>{{ role === 'doctor' ? 'Doctor' : 'Patient' }} Space</h1>
+  </div>
+
+  <div class="wrapper">
+    <ion-card class="form-wrapper">
+      <ion-card-content>
+        <ion-item>
+          <ion-icon name="mail"></ion-icon>
+          <ion-input type="email" placeholder="Email" [(ngModel)]="email" [ngModelOptions]="{standalone:true}" id="mail" required="required"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-icon name="lock-closed"></ion-icon>
+          <ion-input name="password" [(ngModel)]="password" [ngModelOptions]="{standalone:true}" [type]="showPassword ? 'text':'password'" placeholder="Password" required="required" id="password"></ion-input>
+          <ion-icon slot="end" class="eyeicon" [name]="passwordToggleIcon" (click)="togglePassword()"></ion-icon>
+        </ion-item>
+        <ion-button expand="block" (click)="login()">Login</ion-button>
+      </ion-card-content>
+    </ion-card>
+    <div class="line-text">
+      <span class="lines"></span>
+      <span class="text">Or Login With</span>
+    </div>
+    <ion-card class="social-wrapper">
+      <ion-card-content>
+        <div class="socials">
+          <ion-button class="btn-fb">
+            <ion-icon name="logo-facebook"></ion-icon>
+          </ion-button>
+          <ion-button class="btn-go">
+            <ion-icon name="logo-google"></ion-icon>
+          </ion-button>
+        </div>
+      </ion-card-content>
+    </ion-card>
+    <div class="test">Don't have an account? <a href="./register">Sign Up</a></div>
+  </div>
+</ion-content>

@@ -1,0 +1,7 @@
+{
+  "name": "doctorAppointmentApp",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}

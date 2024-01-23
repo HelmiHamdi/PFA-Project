@@ -1,0 +1,89 @@
+/* Core CSS required for Ionic components to work properly */
+@import "~@ionic/angular/css/core.css";
+
+/* Basic CSS for apps built with Ionic */
+@import "~@ionic/angular/css/normalize.css";
+@import "~@ionic/angular/css/structure.css";
+@import "~@ionic/angular/css/typography.css";
+@import '~@ionic/angular/css/display.css';
+
+/* Optional CSS utils that can be commented out */
+@import "~@ionic/angular/css/padding.css";
+@import "~@ionic/angular/css/float-elements.css";
+@import "~@ionic/angular/css/text-alignment.css";
+@import "~@ionic/angular/css/text-transformation.css";
+@import "~@ionic/angular/css/flex-utils.css";
+
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Hubballi&display=swap');
+
+@font-face {
+  font-family: 'Open Sans';
+  font-style: bold;
+  src: url('assets/fonts/OpenSans-Bold.ttf');
+}
+
+@font-face {
+  font-family: 'Open Sans';
+  font-style: medium;
+  src: url('assets/fonts/OpenSans-Medium.ttf');
+}
+
+@font-face {
+  font-family: 'Open Sans';
+  src: url('assets/fonts/OpenSans-SemiBold.ttf');
+}
+
+:root{
+  --ion-font-family: 'Open Sans';
+  --ion-text-color: #000;
+}
+
+.cancel-alert .alert-wrapper {
+  background: #034aa6;
+  padding: 15px;
+  .alert-head {
+    color: white;
+    h2 {
+      color: white;
+      text-align: center;
+      font-weight: bold;
+    }
+  }
+
+  .alert-message {
+    color: white;
+    text-align: center;
+    font-size: 12.5px;
+  }
+
+  .alert-button-group {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+
+    button {
+      width: 75%;
+      background-color: white;
+      border-radius: 6px;
+      text-transform: none;
+
+      &:last-child {
+        background-color: #034aa6;
+        color: white;
+        position: absolute;
+        top: 1px;
+        right: 1px;
+        width: 1px;
+        font-family: 'Hubballi';
+        font-weight: 100;
+      }
+
+      span {
+        font-weight: bold;
+        display: flex;
+        justify-content: center;
+      }
+    }
+  }
+}
